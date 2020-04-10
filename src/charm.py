@@ -87,6 +87,10 @@ class Charm(CharmBase):
                 vhost_content = base64.b64encode(f.read()).decode('utf-8')
             vhost_rdata = '- {' f'port: "{self.VHOST_PORT}", template: {vhost_content}' '}'
             event.relation.data[self.app]['vhosts'] = vhost_rdata
+            event.relation.data[self.unit]['vhosts'] = vhost_rdata
+        else:
+            for k in event.relation.data[self.unit].keys():
+                del event.relation.data[self.unit][k]
 
 
 if __name__ == '__main__':
